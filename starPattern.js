@@ -30,43 +30,45 @@ let Ycoord = randomPosition(1, gridHeight);
  * @return {Promise} promise after certain time interval.
  */
 function pause(milisec) {
-  return new Promise(resolve => setTimeout(resolve, milisec));
+  return new Promise((resolve) => setTimeout(resolve, milisec));
 }
 
 //A function to move the asterisk to a random position within the box.
 async function shift() {
-    while (true) {
-      const direction = Math.random() < 0.5 ? -1 : 1;
-      const axis = Math.random() < 0.5 ? 'x' : 'y';
-  
-      Xcoord += axis === 'x' ? direction : 0;
-      Ycoord += axis === 'y' ? direction : 0;
-  
-      Xcoord = Math.max(1, Math.min(Xcoord, gridWidth - 2));
-      Ycoord = Math.max(1, Math.min(Ycoord, gridHeight - 2));
-  
-      createGrid();
-      await pause(200);
-    }
+  while (true) {
+    const direction = Math.random() < 0.5 ? -1 : 1;
+    const axis = Math.random() < 0.5 ? "x" : "y";
+
+    Xcoord += axis === "x" ? direction : 0;
+    Ycoord += axis === "y" ? direction : 0;
+
+    Xcoord = Math.max(1, Math.min(Xcoord, gridWidth - 2));
+    Ycoord = Math.max(1, Math.min(Ycoord, gridHeight - 2));
+
+    createGrid();
+    await pause(200);
   }
+}
 
 // A function to draw the grid
 function createGrid() {
   console.clear();
 
   for (let row = 0; row < gridHeight; row++) {
-    let line = '';
+    let line = "";
 
     for (let col = 0; col < gridWidth; col++) {
-      if ((row === 0 || row === gridHeight - 1) 
-      && (col === 0 || col === gridWidth - 1)) {
-        line += '+';
+      if (
+        (row === 0 || row === gridHeight - 1) &&
+        (col === 0 || col === gridWidth - 1)
+      ) {
+        line += "+";
       } else if (row === 0 || row === gridHeight - 1) {
-        line += '_';
+        line += "_";
       } else if (col === 0 || col === gridWidth - 1) {
-        line += '|';
+        line += "|";
       } else {
-        line += (row === Ycoord && col === Xcoord) ? '*' : ' ';
+        line += row === Ycoord && col === Xcoord ? "*" : " ";
       }
     }
 
